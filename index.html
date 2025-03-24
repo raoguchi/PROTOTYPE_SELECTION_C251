@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Prototype Selection Project</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        iframe {
+            width: 100%;
+            height: calc(100vh - 70px);
+            border: none;
+            background: white;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                margin-top: 0.5rem;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>📊 Prototype Selection Project</h1>
+        <nav>
+            <a href="summary.html" target="content">📄 Summary</a>
+            <a href="CSE_251A_Project_1.pdf" target="content">📘 Paper</a>
+            <a href="https://github.com/raoguchi/PROTOTYPE_SELECTION_C251" target="_blank">🔗 GitHub Repo</a>
+        </nav>
+    </header>
+
+    <iframe src="summary.html" name="content"></iframe>
+
+</body>
+
+</html>

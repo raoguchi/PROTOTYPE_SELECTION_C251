@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 2em auto;
+            line-height: 1.6;
+            padding: 1em;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1em 0;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        code, pre {
+            background-color: #f4f4f4;
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+        }
+        pre {
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Prototype Selection for 1-NN Classification on MNIST</h1>
+<p><strong>Author:</strong> Ryosuke Oguchi<br>
+<strong>Course:</strong> CSE 251A — Project 1<br>
+<strong>Contact:</strong> roguchi@ucsd.edu</p>
+
+<h2>📚 Overview</h2>
+<p>This project investigates various methods of prototype selection for optimizing <strong>1-Nearest Neighbor (1-NN)</strong> classification using the <strong>MNIST</strong> dataset. The goal is to improve classification accuracy and time efficiency by intelligently reducing the dataset to a representative subset of prototypes.</p>
+
+<h2>📦 Dataset</h2>
+<ul>
+  <li><strong>MNIST</strong> handwritten digits</li>
+  <li>60,000 training images, 10,000 test images</li>
+  <li>Each image: 28×28 pixels grayscale</li>
+</ul>
+
+<h2>🧠 Prototype Selection Methods</h2>
+<h3>1. Random Selection</h3>
+<p>Randomly samples <code>M</code> points from the training set. Baseline method — simple, but accuracy varies due to randomness.</p>
+
+<h3>2. K-Means Clustering</h3>
+<p>Clusters all data into <code>M</code> groups and uses centroids as prototypes. More structured than random selection but computationally expensive.</p>
+
+<h3>3. K-Means++ Clustering</h3>
+<p>Improves initial centroid choice using distance-based probabilistic seeding. Faster convergence and often better separation.</p>
+
+<h3>4. Random Sampling + K-Means</h3>
+<p>Reduces training set before K-Means using random sampling (<code>j >> M</code>). Improves training time, risks representation loss.</p>
+
+<h2>🧪 Experiments & Results</h2>
+<h3>✅ Evaluation Metric</h3>
+<ul>
+  <li><strong>Accuracy</strong> of 1-NN predictions on the MNIST test set</li>
+  <li><strong>Confidence Intervals</strong> (95% and 99%) for statistical comparisons</li>
+</ul>
+
+<h3>📊 Summary of Accuracy</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>M (Prototypes)</th>
+      <th>Accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td rowspan="2">Random</td><td>10,000</td><td>94.69–95.04% (95%)</td></tr>
+    <tr><td>1,000</td><td>87.45–89.72% (95%)</td></tr>
+    <tr><td rowspan="2">K-Means</td><td>10,000</td><td>95.92%</td></tr>
+    <tr><td>1,000</td><td>93.72%</td></tr>
+    <tr><td rowspan="2">K-Means++</td><td>10,000</td><td>95.55%</td></tr>
+    <tr><td>1,000</td><td>93.68%</td></tr>
+    <tr><td rowspan="2">Random + K-Means</td><td>10,000 (from 45k)</td><td>95.38–96.05%</td></tr>
+    <tr><td>1,000 (from 15k)</td><td>91.25–93.02%</td></tr>
+  </tbody>
+</table>
+
+<h2>⚙️ Implementation</h2>
+<ul>
+  <li>Prototypes used as references for 1-NN via <strong>Euclidean distance</strong></li>
+  <li>Clustering with <code>sklearn.cluster.MiniBatchKMeans</code></li>
+  <li>Random sampling via <code>numpy.random.choice</code></li>
+</ul>
+
+<h3>🔧 Pseudocode</h3>
+<pre><code>d(x_q, x_i) = sqrt( sum_k (x_{q_k} - x_{i_k})^2 )
+
+ŷ = y_j  where  j = argmin_i d(x_q, x_i)
+</code></pre>
+
+<h2>🧩 File Structure</h2>
+<pre><code>project/
+├── code.ipynb              # Jupyter notebook with implementation
+├── data/                   # Raw MNIST IDX files
+├── CSE_251A_Project_1.pdf  # Final project report
+</code></pre>
+
+<h2>🔍 Critical Insights</h2>
+<ul>
+  <li>K-Means++ performs slightly better in low-<code>M</code> scenarios but not drastically over K-Means.</li>
+  <li>Random + K-Means is a promising compromise between accuracy and speed.</li>
+  <li>High-dimensionality of MNIST (R^784) may reduce benefits of clustering over full set.</li>
+</ul>
+
+<h2>🚀 Future Work</h2>
+<ul>
+  <li>Explore <strong>Tangent Distance</strong> to replace Euclidean, better capturing digit similarity</li>
+  <li>Use data-driven sampling to pre-filter irrelevant training points</li>
+  <li>Consider alternate clustering (e.g. GMM, hierarchical) or dimensionality reduction (e.g. PCA)</li>
+</ul>
+
+<h2>📚 References</h2>
+<ul>
+  <li>Arthur, D., & Vassilvitskii, S. (2007). <em>k-means++: The Advantages of Careful Seeding</em></li>
+  <li>StackOverflow Discussions on K-Means Practicality and Initialization Methods</li>
+</ul>
+
+<p><em>This project was developed as part of UCSD CSE 251A coursework.</em></p>
+
+</body>
+</html>

@@ -22,11 +22,11 @@ This project investigates various methods of prototype selection for optimizing 
 ## 🧠 Prototype Selection Methods
 
 ### 1. Random Selection
-Randomly samples \( M \) points from the training set.  
+Randomly samples `M` points from the training set.  
 Baseline method — simple, but accuracy varies due to randomness.
 
 ### 2. K-Means Clustering
-Clusters all data into \( M \) groups and uses centroids as prototypes.  
+Clusters all data into `M` groups and uses centroids as prototypes.  
 More structured than random selection but computationally expensive.
 
 ### 3. K-Means++ Clustering
@@ -34,7 +34,7 @@ Improves initial centroid choice using distance-based probabilistic seeding.
 Faster convergence and often better separation.
 
 ### 4. Random Sampling + K-Means
-Reduces training set before K-Means using random sampling (\( j \gg M \)).  
+Reduces training set before K-Means using random sampling (`j >> M`).  
 Improves training time, risks representation loss.
 
 ---
@@ -47,16 +47,16 @@ Improves training time, risks representation loss.
 
 ### 📊 Summary of Accuracy
 
-| Method               | M (Prototypes) | Accuracy   |
-|----------------------|----------------|------------|
-| Random               | 10,000         | 94.69–95.04% (95%) |
-|                      | 1,000          | 87.45–89.72% (95%) |
-| K-Means              | 10,000         | 95.92%     |
-|                      | 1,000          | 93.72%     |
-| K-Means++            | 10,000         | 95.55%     |
-|                      | 1,000          | 93.68%     |
-| Random + K-Means     | 10,000 (from 45k) | 95.38–96.05% |
-|                      | 1,000 (from 15k) | 91.25–93.02% |
+| Method               | M (Prototypes)     | Accuracy         |
+|----------------------|--------------------|------------------|
+| Random               | 10,000             | 94.69–95.04% (95%) |
+|                      | 1,000              | 87.45–89.72% (95%) |
+| K-Means              | 10,000             | 95.92%           |
+|                      | 1,000              | 93.72%           |
+| K-Means++            | 10,000             | 95.55%           |
+|                      | 1,000              | 93.68%           |
+| Random + K-Means     | 10,000 (from 45k)  | 95.38–96.05%     |
+|                      | 1,000 (from 15k)   | 91.25–93.02%     |
 
 > 📌 *K-Means and K-Means++ consistently outperform random selection, especially with fewer prototypes.*
 
@@ -70,15 +70,15 @@ Improves training time, risks representation loss.
 
 ### 🔧 Pseudocode
 
-#### Euclidean Distance:
-\[
-d(x_q, x_i) = \sqrt{\sum_k (x_{q_k} - x_{i_k})^2}
-\]
+**Euclidean Distance:**
+```
+d(x_q, x_i) = sqrt( sum_k (x_{q_k} - x_{i_k})^2 )
+```
 
-#### Prediction:
-\[
-\hat{y} = y_j \quad \text{where} \quad j = \arg\min_i d(x_q, x_i)
-\]
+**Prediction:**
+```
+ŷ = y_j  where  j = argmin_i d(x_q, x_i)
+```
 
 ---
 
@@ -95,9 +95,9 @@ project/
 
 ## 🔍 Critical Insights
 
-- K-Means++ performs slightly better in low-\( M \) scenarios but not drastically over K-Means.
+- K-Means++ performs slightly better in low-`M` scenarios but not drastically over K-Means.
 - Random + K-Means is a promising compromise between accuracy and speed.
-- High-dimensionality of MNIST (\( \mathbb{R}^{784} \)) may reduce benefits of clustering over full set.
+- High-dimensionality of MNIST (R^784) may reduce benefits of clustering over full set.
 
 ---
 
